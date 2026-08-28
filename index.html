@@ -7,15 +7,13 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Desain Latar Belakang & Efek Transisi Sinematik */
         body {
-            background-image: linear-gradient(rgba(10, 10, 10, 0.85), rgba(15, 15, 15, 0.9)), url('MASUKKAN_URL_GAMBAR_BACKGROUND_ANDA_DISINI');
+            background-image: linear-gradient(rgba(10, 10, 10, 0.85), rgba(15, 15, 15, 0.9)), url('https://github.com/yunitarizkyzafitra-bit/peserta-tasyakuran/blob/main/dirosa.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        /* Animasi Transisi Halus / Cinematic Keyframes */
         @keyframes cinematicIn {
             0% {
                 opacity: 0;
@@ -33,7 +31,6 @@
             animation: cinematicIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Efek Glow Teks Emas */
         .gold-glow {
             text-shadow: 0 0 25px rgba(212, 175, 55, 0.4), 0 0 10px rgba(212, 175, 55, 0.2);
         }
@@ -42,106 +39,449 @@
 <body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between p-6">
 
     <!-- Header / Identitas Acara -->
-    <header class="max-w-4xl mx-auto w-full text-center py-6">
-        <div class="inline-block px-6 py-2 rounded-full bg-slate-900/80 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-widest uppercase mb-3 shadow-lg">
+    <header class="max-w-4xl mx-auto w-full text-center py-4">
+        <div class="inline-block px-6 py-1.5 rounded-full bg-slate-900/80 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-widest uppercase mb-2 shadow-lg">
             Angkatan IX
         </div>
         <h1 class="text-3xl md:text-5xl font-extrabold text-amber-300 tracking-wide gold-glow">
             PROSESI TASYAKURAN DIROSA
         </h1>
-        <p class="text-sm text-slate-300 mt-2 font-medium tracking-wider">Sistem Pemanggilan Peserta Berbasis Cloud & Integrasi Real-Time</p>
+        <p class="text-xs md:text-sm text-slate-300 mt-1 font-medium tracking-wider">Sistem Pemanggilan Peserta Terintegrasi Data Spreadsheet</p>
     </header>
 
     <!-- Konten Utama / Panggung Pemanggilan Sinematik -->
     <main class="max-w-3xl mx-auto w-full my-auto">
-        <div id="displayCard" class="bg-slate-950/80 backdrop-blur-xl border border-amber-500/40 rounded-3xl p-10 shadow-2xl text-center cinematic-transition relative overflow-hidden">
+        <div id="displayCard" class="bg-slate-950/85 backdrop-blur-xl border border-amber-500/40 rounded-3xl p-8 md:p-10 shadow-2xl text-center cinematic-transition relative overflow-hidden">
             
             <!-- Aksen Cahaya Sudut -->
             <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <span id="labelStatus" class="text-xs uppercase tracking-widest text-amber-400/80 font-bold block mb-3">Peserta Dipanggil Saat Ini</span>
-            
-            <!-- Nama Peserta (Fokus Utama Transisi) -->
-            <h2 id="namaPeserta" class="text-4xl md:text-6xl font-black text-white my-4 tracking-tight gold-glow transition-all duration-700">
-                Silakan Pilih Peserta
-            </h2>
-            
-            <!-- Detail / Kelompok Peserta -->
-            <div id="detailPeserta" class="text-lg md:text-xl text-amber-200/90 font-medium mb-8">
-                -
+            <!-- Foto Peserta -->
+            <div class="mb-5 flex justify-center">
+                <div class="w-32 h-32 md:w-36 md:h-36 rounded-full border-2 border-amber-400/60 p-1 bg-slate-900 shadow-xl overflow-hidden flex items-center justify-center">
+                    <img id="fotoPeserta" src="https://via.placeholder.com/150/111827/D4AF37?text=Foto" alt="Foto Peserta" class="w-full h-full object-cover rounded-full">
+                </div>
             </div>
 
-            <!-- Panel Kontrol Operator / Navigasi -->
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 pt-6 border-t border-slate-800">
-                <button onclick="nextPeserta()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-amber-600/30 transition transform active:scale-95">
+            <span id="labelLiqo" class="text-xs md:text-sm uppercase tracking-widest text-amber-400 font-bold block mb-1">Kelompok Liqo - Mudarrisah</span>
+            
+            <!-- Nama Peserta -->
+            <h2 id="namaPeserta" class="text-3xl md:text-5xl font-black text-white my-3 tracking-tight gold-glow transition-all duration-700">
+                Silakan Panggil Peserta
+            </h2>
+            
+            <!-- Alamat & Detail -->
+            <div id="detailPeserta" class="text-base md:text-lg text-amber-200/90 font-medium mb-6">
+                Tekan tombol di bawah untuk memulai pemanggilan
+            </div>
+
+            <!-- Panel Kontrol Operator -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6 pt-5 border-t border-slate-800">
+                <button onclick="prevPeserta()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium px-5 py-3 rounded-xl transition">
+                    ◀ Sebelumnya
+                </button>
+                <button onclick="nextPeserta()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold px-8 py-3 rounded-xl shadow-lg shadow-amber-600/30 transition transform active:scale-95">
                     Panggil Peserta Berikutnya ➔
                 </button>
-                <button onclick="loadDataFromBackend()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium px-6 py-3.5 rounded-xl transition">
-                    Sinkronisasi Data Sheet
-                </button>
+            </div>
+            
+            <div class="mt-4 text-xs text-slate-400">
+                Peserta ke-<span id="currentIndex">0</span> dari <span id="totalIndex">330</span>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-4 text-xs text-slate-400 tracking-wider">
-        Tasyakuran Dirosa Angkatan IX &copy; 2026 &bull; Secure System Architecture
+    <footer class="text-center py-2 text-xs text-slate-400 tracking-wider">
+        Tasyakuran Dirosa Angkatan IX &copy; 2026
     </footer>
 
-    <!-- Skrip Logika & Transisi Sinematik -->
+    <!-- Skrip Data Asli Spreadsheet & Transisi Sinematik -->
     <script>
-        // Ganti dengan URL Web App Google Apps Script Anda
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQilQg1tsWcYePf3Fuv32s1Be8sCzuioG8S9D4Ov30PJThWybmPY_Rez44r8mlvTLY/exec";
-
-        let daftarPeserta = [
-            { nama: "Ahmad Fauzi, S.Pd.", detail: "Kelompok 01 - Palu Selatan" },
-            { nama: "Siti Aminah", detail: "Kelompok 02 - Palu Timur" },
-            { nama: "Muh. Rasyid", detail: "Kelompok 03 - Tatanga" }
+        // Data utuh 330 peserta dari Spreadsheet Anda
+        const daftarPeserta = [
+            { nama: "Riska Rahayu, A.md.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "BTN green tinggede", foto: "Picture1.png" },
+            { nama: "Anisya Ismail, A.md.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Puskud", foto: "WhatsApp Image 2026-08-21 at 20.41.45.jpeg" },
+            { nama: "Endang Sudariyaningsih", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Alamat tidak tercatat", foto: "mk.png" },
+            { nama: "Apt. Nur Afiat. S. Farm", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Jl. Dewi Sartika no. 6", foto: "Picture1.png" },
+            { nama: "Yulianingsih", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Alamat tidak tercatat", foto: "kjl.png" },
+            { nama: "Maria Ulfa, AMD.AK", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Lisnawati", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. tekukur", foto: "" },
+            { nama: "Miliani", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Bulu Masomba", foto: "" },
+            { nama: "Warneng", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Yuyun Sudiarni", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Erna", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Dewi", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Zulfiah", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Suriani", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Meiliya Purnama Sari", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Etria", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Tekukur", foto: "" },
+            { nama: "Lismawati", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Pasar Lasoani", foto: "" },
+            { nama: "Ida", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. Pasar Lasoani", foto: "" },
+            { nama: "Andi Hasna", liqo: "AL-ALAQ 9.MT7", mudarrisah: "NURIAN", alamat: "Jl. BTN Bawah", foto: "" },
+            { nama: "Mayang Sari", liqo: "AL-ALAQ 9.PS6", mudarrisah: "NURWATI", alamat: "Jl. Pramuka, Biromaru", foto: "" },
+            { nama: "Fenita Husna", liqo: "AL-ALAQ 9.PS6", mudarrisah: "NURWATI", alamat: "Jl. Pelita Air", foto: "" },
+            { nama: "Siti Ikhlasvia", liqo: "AL-ALAQ 9.PS6", mudarrisah: "NURWATI", alamat: "Jl. Flamboyan, Marawola", foto: "" },
+            { nama: "Nur Safia", liqo: "AL-ALAQ 9.PS6", mudarrisah: "NURWATI", alamat: "Jl. Ramba II", foto: "" },
+            { nama: "Sariyanti", liqo: "AL-ALAQ 9.MT1", mudarrisah: "ZULAILA", alamat: "Lasoani", foto: "" },
+            { nama: "Ramdhania, SKM", liqo: "AL-ALAQ 9.MT1", mudarrisah: "ZULAILA", alamat: "Lasoani", foto: "" },
+            { nama: "Hermawati Andi Asmawi, ST", liqo: "AL-ALAQ 9.MT1", mudarrisah: "ZULAILA", alamat: "Lasoani", foto: "" },
+            { nama: "Alwia Ahmad. S.Sos", liqo: "AL-ALAQ 9.MT1", mudarrisah: "ZULAILA", alamat: "Lasoani", foto: "" },
+            { nama: "Rabiatun Sailila", liqo: "AL-ALAQ 9.MT1", mudarrisah: "ZULAILA", alamat: "Lasoani", foto: "" },
+            { nama: "Sri Rahmawati", liqo: "AL-ALAQ 9.MT3", mudarrisah: "ENGGAR DARWIS", alamat: "Poboya", foto: "" },
+            { nama: "Rohani", liqo: "AL-ALAQ 9.MT3", mudarrisah: "ENGGAR DARWIS", alamat: "Poboya", foto: "" },
+            { nama: "Irna", liqo: "AL-ALAQ 9.MT3", mudarrisah: "ENGGAR DARWIS", alamat: "Poboya", foto: "" },
+            { nama: "Nur Ainun", liqo: "AL-ALAQ 9.MT3", mudarrisah: "ENGGAR DARWIS", alamat: "Poboya", foto: "" },
+            { nama: "Helda", liqo: "AL-ALAQ 9.MT4", mudarrisah: "KASMINA", alamat: "Huntap Talise", foto: "" },
+            { nama: "Devianty", liqo: "AL-ALAQ 9.MT4", mudarrisah: "KASMINA", alamat: "Huntap Talise", foto: "" },
+            { nama: "Desi Puspita", liqo: "AL-ALAQ 9.MT4", mudarrisah: "KASMINA", alamat: "Huntap Talise", foto: "" },
+            { nama: "Minarti", liqo: "AL-ALAQ 9.MT4", mudarrisah: "KASMINA", alamat: "Huntap Talise", foto: "" },
+            { nama: "Denik Aris Tanti", liqo: "AL-ALAQ 9.MT4", mudarrisah: "KASMINA", alamat: "Jl. Soekarno Hatta", foto: "" },
+            { nama: "Sumarni", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Rina", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Beo", foto: "" },
+            { nama: "Liesdawati", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Siti Hadijah", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Suratmi Dede", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Fani", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Beo", foto: "" },
+            { nama: "Asni", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Beo", foto: "" },
+            { nama: "Masni", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Setyo Susanti", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Yohana Rorimpandey", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Lagarutu", foto: "" },
+            { nama: "Lisdawati Asbat", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Leni Takbir", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Diana", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Sapna", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Beo", foto: "" },
+            { nama: "Suarty", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Hernawati", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Kasturi", foto: "" },
+            { nama: "Hj. Munsyir", liqo: "AL-ALAQ 9.MT16", mudarrisah: "HERNI NARAWATI", alamat: "Jl. Cendrawasih", foto: "" },
+            { nama: "Mufidah", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Juanda No.15 A", foto: "" },
+            { nama: "Anna Syamsudin", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Basuki Rahmat", foto: "" },
+            { nama: "Siti Aisya", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. lagarutu 2", foto: "" },
+            { nama: "Kiki Fatmala Sari", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Lagarutu", foto: "" },
+            { nama: "Mirna A. Tolla, S.M., M.M", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Huntap Tondo 1", foto: "" },
+            { nama: "Mahmudah", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jln. Soekarno Hatta", foto: "" },
+            { nama: "Sri Purwanti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Sisingamangaraja", foto: "" },
+            { nama: "Masda, SST., M.Kes.", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara CPI 3 blok a no.9", foto: "" },
+            { nama: "Caniti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara CPI 1 Blok T no 9", foto: "" },
+            { nama: "Rahmaniar,S.Sos.M.Si", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl.Dayodara CPI 1 Blok A.17", foto: "" },
+            { nama: "Suci Dama Yanti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jln.setia budi,lrng.delima no. 03", foto: "" },
+            { nama: "Sintia", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Dayo dara,cpi1 blok M4", foto: "" },
+            { nama: "Erdawati", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jln.Merpati 2a.", foto: "" },
+            { nama: "Juwarti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Dewi Sartika", foto: "" },
+            { nama: "Andi Esse", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "jl dayo dara belakang kampus", foto: "" },
+            { nama: "Nureni Tahir, S.Pd.", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Jl. Dayo darah CPI I Blok D no 7", foto: "" },
+            { nama: "Nuraenah", liqo: "AL-ALAQ 9.MT10", mudarrisah: "SALMIATI", alamat: "Dayodara perum citra", foto: "" },
+            { nama: "Mila", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Tombolotutu 153,", foto: "" },
+            { nama: "Nur Gamar", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Tombolotutu, lrg.Ayu,", foto: "" },
+            { nama: "Nursanti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. Tombolotutu", foto: "" },
+            { nama: "Misnar", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Pakora 2,", foto: "" },
+            { nama: "Heti", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Tombolotutu, lrg.Ayu,", foto: "" },
+            { nama: "Ngatmina", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "bukit Marwah,", foto: "" },
+            { nama: "Herlina", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. merpati 12 L,", foto: "" },
+            { nama: "Zainab", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. soekarno hatta,", foto: "" },
+            { nama: "Vonny", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Kalantaro,", foto: "" },
+            { nama: "Nurlian", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Tombotutu 144,", foto: "" },
+            { nama: "Wahyuni", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. tombolotutu lrg.pakora 2", foto: "" },
+            { nama: "Ariati", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. tombolotutu 147", foto: "" },
+            { nama: "Suhariani", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Tombolotutu lrg arrahman no 153B", foto: "" },
+            { nama: "Ramlah", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "TombolotutuLrg Ar-Rahman", foto: "" },
+            { nama: "Selvi", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jl. sukarno hatta", foto: "" },
+            { nama: "Anizar", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Jabal rahma", foto: "" },
+            { nama: "Heristina", liqo: "AL-ALAQ 9.MT10", mudarrisah: "ARLINA", alamat: "Kalantaro", foto: "" },
+            { nama: "Hj. Zalzulmida A.Djanggola SH.CN", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln Sebra II No.19A, Birobuli Utara", foto: "" },
+            { nama: "dr. Muslimah L. Gadi. MSi.", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Slamet Riadi No.15, Besusu Timur", foto: "" },
+            { nama: "Dra Hj Tuty Hamid", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Merpati No. 15 b, Tanamodindi", foto: "" },
+            { nama: "Hj. Enny Ismawaty", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Banteng Blok BI, No.18 Palu", foto: "" },
+            { nama: "Hj. Aminah M.Amir A.Md.Keb.", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Tombolotutu, Pakora I, Valanggoni", foto: "" },
+            { nama: "Marhawati  Mappatoba", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.Samratulagi No.9", foto: "" },
+            { nama: "Dra. Hasiaty Ponulele, M.Kes", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "BTN Pondok Permata Blok B, Jl. Banteng No.2", foto: "" },
+            { nama: "Hj. Ramlah  Andi Raga Pettalolo", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Merak No. 25, Birobuli Utara", foto: "" },
+            { nama: "Kumala, STr. Keb", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Cut Mutia No 9 , Palu", foto: "" },
+            { nama: "Hj. Mastura Labalado", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Swadaya", foto: "" },
+            { nama: "Hj. Lely Pakamundi", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Kijang Utara 3 , Palu Selatan", foto: "" },
+            { nama: "Hj. Wardah Junus", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln Kptn Tendean No. 10, Bumi Nyiur", foto: "" },
+            { nama: "Dra. Nurjannah Junus", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln Abadi No. 45, Palu", foto: "" },
+            { nama: "Dra. Hj. Sovianita Malaba, M.Si", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln. Citditiro No. 6", foto: "" },
+            { nama: "Dra. Farida Amu MSi", liqo: "AL-ALAQ 9.MT13", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln Samratulangi, No 70 A", foto: "" },
+            { nama: "Diah Eka Noervana", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Jalan Nggoriovala", foto: "" },
+            { nama: "Lizwar", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Citra pesona indah", foto: "" },
+            { nama: "dr. Asriyanti", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Jln EMI Saelan", foto: "" },
+            { nama: "Dwi Wahyuni", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "BTN Tinggede", foto: "" },
+            { nama: "Suriani", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Jln Kancil", foto: "" },
+            { nama: "Herlita", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Citra pesona Indah", foto: "" },
+            { nama: "Khairunnisaa", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Citra pesona Indah", foto: "" },
+            { nama: "Megawati", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Jln Wahid Hasyim", foto: "" },
+            { nama: "Dewi Susara", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Zebra IV NO 15 (Perum kehutanan)", foto: "" },
+            { nama: "Hj. Yosephine M Listiyani S.Pd", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Karanja Lembah Lr Mesjid Nurul Huda IV/15", foto: "" },
+            { nama: "Hj. Winarsih S.Pd", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Manunggal Tatura", foto: "" },
+            { nama: "Puspita Yotolembah", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Ramba", foto: "" },
+            { nama: "Hj. Nuraeni S.Pd", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Kancil NO 15", foto: "" },
+            { nama: "Susi.E.W.Mastura", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "Jl Tanjung satu Lrg II NO 26 i", foto: "" },
+            { nama: "Dr. Andi Nurhayati Yotolembah", liqo: "AL-ALAQ 9.PS2", mudarrisah: "NUR PRATIWI", alamat: "BTN Pengawu Blok A NO 14", foto: "" },
+            { nama: "Ramadhani Nursanti Lembah, Amd.Keb", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Nurnaningsih, Amd.Keb", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Sofiah Nur, S.Ag", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Yopa Youlan Katili", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Farida, S.Pd", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Masna Talamoa", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Salsabila", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Alisya Septiani Putri", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Daryuti", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Faradilah, S.Pd", liqo: "AL-ALAQ 9.TG2", mudarrisah: "ROSMIATY", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Citra Dewi", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Marina", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S. Kinore", foto: "" },
+            { nama: "Iis Mulyati", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S. Kinore", foto: "" },
+            { nama: "Arfah, Amd.Keb", liqo: "AL-ALAQ 9.UL1", mudarrisah: "RESKI AMALIA, SE.,MM", alamat: "Jl. Kelor", foto: "" },
+            { nama: "Salfia Toana", liqo: "AL-ALAQ 9.UL1", mudarrisah: "RESKI AMALIA, SE.,MM", alamat: "Jl. Green Gawalise Mandiri", foto: "" },
+            { nama: "Riri Suwahyuni Wahid, S.KM.,M.Kes", liqo: "AL-ALAQ 9.UL1", mudarrisah: "RESKI AMALIA, SE.,MM", alamat: "Jl. S. Tanamea", foto: "" },
+            { nama: "Dian Wahyuni, S.Pd", liqo: "AL-ALAQ 9.UL1", mudarrisah: "RESKI AMALIA, SE.,MM", alamat: "Jl. G. Gawalise", foto: "" },
+            { nama: "Dey Intan.S.Sos", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Anoa 1", foto: "" },
+            { nama: "Nurma'rifah.S.pd.i", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Anoa 1", foto: "" },
+            { nama: "Ade Laras Falisa", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Dewi Sartika", foto: "" },
+            { nama: "Farida Solfiana", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Kapten Tendean No. 7", foto: "" },
+            { nama: "Wahyuni", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Anoa 1", foto: "" },
+            { nama: "Indayati SE", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "BTN Pengawu", foto: "" },
+            { nama: "Melty SE", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Karanja Lembah", foto: "" },
+            { nama: "Frida Rienin", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Anoa 1", foto: "" },
+            { nama: "Roswita H. Romu", liqo: "AL-ALAQ 9.PS4", mudarrisah: "LASMIATI", alamat: "Jl. Anoa 1", foto: "" },
+            { nama: "Jurianti", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Jl. Asam 2", foto: "" },
+            { nama: "Siti Munira Dg. Manessa", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "jl.bukit tinggi", foto: "" },
+            { nama: "Ani Sartika, S.Pd.SD", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Jl.buvukulu", foto: "" },
+            { nama: "Nirmawati", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Jl.buvukulu", foto: "" },
+            { nama: "Jumriah", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Jl.perumahan BTN delta", foto: "" },
+            { nama: "Widyawati", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Jl.perumahan BTN delta", foto: "" },
+            { nama: "Asmira", liqo: "AL-ALAQ 9.UL3", mudarrisah: "MAYSARAH UMMIYATI", alamat: "Bukit Tursina", foto: "" },
+            { nama: "Andriani A. Md. Kep", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate Kav. Mangga B No. 31", foto: "" },
+            { nama: "Lisa Utami Musli, S.Kom", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate Kav. Mangga B No. 30", foto: "" },
+            { nama: "Sri Ningsih, A.Md.Kep", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "Jln. Bunga Ijo", foto: "" },
+            { nama: "Yuli Eka Putri, S.Pd", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate Kav. Mangga B No. 1", foto: "" },
+            { nama: "Nurhayati A. Md. Kep", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "Jln. Datu Adam", foto: "" },
+            { nama: "Hilda Rilla S.pd.I", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate Kav. Langsat B no.1", foto: "" },
+            { nama: "Rafida Novianti, A.Md.Keb", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Kav. Durian", foto: "" },
+            { nama: "Maryam", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate", foto: "" },
+            { nama: "Asnidar", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Nuraima", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Masdiana", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Muriati", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Munira", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Karmila", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Masria", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Roswati", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Minarni", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Ridawati", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Amalia", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Erni", liqo: "AL-ALAQ 9.UL5", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.  Hasanuddin Toto", foto: "" },
+            { nama: "Fitriani", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl.Gawalise Balaroa", foto: "" },
+            { nama: "Riasti", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl. Gawalise Balaroa", foto: "" },
+            { nama: "Faika", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl. Gawalise Balaroa", foto: "" },
+            { nama: "Citra Dewi", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl. Sumur Yuga", foto: "" },
+            { nama: "Lusiana", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl. Sumur Yuga", foto: "" },
+            { nama: "Harianti, S. PD.I", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Jl. Jalur Gaza", foto: "" },
+            { nama: "Melati Olivia, SH", liqo: "AL-ALAQ 9.UL7", mudarrisah: "RAODHA, S.Pd", alamat: "Taman Ria Estate kav. Akasia 7 Silae Palu", foto: "" },
+            { nama: "Maya Prastha Panintjo, S.AP", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln. Ganogo no 14", foto: "" },
+            { nama: "Herlina Pratiwi, S.Psi", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln. Pue Bongo no 83", foto: "" },
+            { nama: "Sri Uniarti. SH", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Ranginggamagi", foto: "" },
+            { nama: "Erni Rohani Abubakar, S.Sos", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl.Damai no.6", foto: "" },
+            { nama: "Ismawati Ibrahim", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln Pue bongo", foto: "" },
+            { nama: "Dra.Ratni Laiya, M.Si", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln.Veteran 95 E", foto: "" },
+            { nama: "Nurmawati Pettalolo", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln. G. Sidole No.6", foto: "" },
+            { nama: "Femmy Katili", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Simpotove timur, Tondo", foto: "" },
+            { nama: "Herda Tumu", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Garuda 2 jln Palapa 1", foto: "" },
+            { nama: "Imelda Adnan Panintjo", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Nunumbuku Poboya", foto: "" },
+            { nama: "Siti Nurhaliza", liqo: "AL-ALAQ 9.TG1", mudarrisah: "ELISABETH HAMBALI", alamat: "Jln. Kalora", foto: "" },
+            { nama: "Ery Lennyarti, ST", liqo: "AL-ALAQ 9.PB8", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Kelapa 2", foto: "" },
+            { nama: "Parmira Untari", liqo: "AL-ALAQ 9.PB8", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. S. Manonda", foto: "" },
+            { nama: "Linda", liqo: "AL-ALAQ 9.PB8", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Ketimun", foto: "" },
+            { nama: "Novita Dewi", liqo: "AL-ALAQ 9.PB8", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Sis Aljufri", foto: "" },
+            { nama: "Riri Basri", liqo: "AL-ALAQ 9.PB8", mudarrisah: "ELISABETH HAMBALI", alamat: "Jl. Gawalise", foto: "" },
+            { nama: "Zultin,S.HI", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Jln. Anoa no. 5", foto: "" },
+            { nama: "Ana Rolita", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Jln. Zebra", foto: "" },
+            { nama: "Millah", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Silae", foto: "" },
+            { nama: "Kunarti", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Langaleso Kec. Dolo Sigi", foto: "" },
+            { nama: "Hijriyani Fitri,S.Sos.I", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Jln. Bunga Ijo", foto: "" },
+            { nama: "Siti Fatmawati, S.Pd", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Jl.Dewi Sartika", foto: "" },
+            { nama: "Aini Lutfiyah", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Fatmawati", liqo: "AL-ALAQ 9.PB7", mudarrisah: "EPA NURMALA", alamat: "Jl. Dayodara Perum Citra Pesona Indah 1 Blok S no 15", foto: "" },
+            { nama: "Patmawati", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "jln boya nempa", foto: "" },
+            { nama: "Evi Purwanti", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "jln jati", foto: "" },
+            { nama: "Syamsidar", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "Jln boya nempa", foto: "" },
+            { nama: "Sri Rahayu", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "jln boya nempa", foto: "" },
+            { nama: "Nurhayati", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "jln kramat jati", foto: "" },
+            { nama: "Nurjanah Ahmad", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "jln beringin", foto: "" },
+            { nama: "Sunanda", liqo: "AL-ALAQ 9.PB10", mudarrisah: "DEMI MUSTAN", alamat: "Kompleks Duyu", foto: "" },
+            { nama: "Sariana", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Harmawati", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Riyani", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Masria", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Marina", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Nursyam", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Ardania", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Ramadhan", liqo: "AL-ALAQ 9.PB6", mudarrisah: "MASNAH, S.Hut", alamat: "Jl. S Kinore", foto: "" },
+            { nama: "Hasnawati, S.Ag.", liqo: "AL-ALAQ 9.PB2", mudarrisah: "WIDIASTUTI", alamat: "Jl. Padanjakaya kompleks BTN Bukitsira", foto: "" },
+            { nama: "Nurmiati Binti Mahmud", liqo: "AL-ALAQ 9.PB2", mudarrisah: "WIDIASTUTI", alamat: "Jn. Ganogo No. 2 , Boyaoge", foto: "" },
+            { nama: "Vitra Vidya Ermala Januarisca", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Palupi Square", foto: "" },
+            { nama: "Anisya Ismail, A.md.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Puskud", foto: "" },
+            { nama: "Feranita Hasania", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "BTN Palupi permai blok N. No. 10", foto: "" },
+            { nama: "Masiti", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Jl. S. Manonda", foto: "" },
+            { nama: "Nurlaela Latif", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Jl. Kenari XI No. 8 Perumnas Tinggede", foto: "" },
+            { nama: "Ismawati.S.kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "jl.tanjung dako.lorong kasgoro", foto: "" },
+            { nama: "Fitria.S.kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Jl.umar syarief", foto: "" },
+            { nama: "Puput Setiawaty  Amd.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Jl.kancil 3 no 62 E", foto: "" },
+            { nama: "Rosmiani.S.Kep.Ns, M.Kes.", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Baliase", foto: "" },
+            { nama: "Jahria Barkah Makatita", liqo: "AL-ALAQ 9.MT14", mudarrisah: "HASIATI", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Atik Musihah", liqo: "AL-ALAQ 9.PT6", mudarrisah: "HERNI NARAWATI", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Surianti Punsungonje, SE", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Andi Mashuri Nur, SP", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara", foto: "" },
+            { nama: "Hj. Arfiah Haerollah", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara CPI 1", foto: "" },
+            { nama: "Neni Yusnita", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "BTN Dayodara", foto: "" },
+            { nama: "Novita", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "BTN Dayodara", foto: "" },
+            { nama: "Asna Ichsan", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "BTN Dayodara", foto: "" },
+            { nama: "Raodha Hi. Sahido, S.Pd", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "BTN Dayodara", foto: "" },
+            { nama: "Kartini Madusa", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara", foto: "" },
+            { nama: "Sunarti", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara", foto: "" },
+            { nama: "Desy Akbar", liqo: "AL-ALAQ 9.MT9", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara", foto: "" },
+            { nama: "Hana Mahmud", liqo: "AL-ALAQ 9.PT1", mudarrisah: "ARLINA", alamat: "Jln. Rajamoili", foto: "" },
+            { nama: "Ulfah yanti", liqo: "AL-ALAQ 9.PT1", mudarrisah: "ARLINA", alamat: "Jln. Rajamoili", foto: "" },
+            { nama: "Indriyani", liqo: "AL-ALAQ 9.PT1", mudarrisah: "ARLINA", alamat: "Jln. Rajamoili", foto: "" },
+            { nama: "Sumiati", liqo: "AL-ALAQ 9.PT1", mudarrisah: "ARLINA", alamat: "Jln. Rajamoili", foto: "" },
+            { nama: "Evi Sulistyawati", liqo: "AL-ALAQ 9.PT2", mudarrisah: "ARLINA", alamat: "Jl. MT haryono", foto: "" },
+            { nama: "Eva anggraeni", liqo: "AL-ALAQ 9.PT2", mudarrisah: "ARLINA", alamat: "Jl.mt haryono", foto: "" },
+            { nama: "Norma", liqo: "AL-ALAQ 9.PT2", mudarrisah: "ARLINA", alamat: "Jl.yojokodi", foto: "" },
+            { nama: "Nurnaimah", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Otista Lrg. I No. 43", foto: "" },
+            { nama: "Andi Eliyana", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Bukit Marwah", foto: "" },
+            { nama: "Hartati", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Poros Palu Kulawi", foto: "" },
+            { nama: "Vita", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Tondo", foto: "" },
+            { nama: "Rahmawati", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "jl. Merpati", foto: "" },
+            { nama: "Miralestari, S.Sos", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Otista Lrg. I No. 43", foto: "" },
+            { nama: "Nurjannah", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Dayodara", foto: "" },
+            { nama: "Erfina", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. S. Parman No. 60", foto: "" },
+            { nama: "Salma, SE", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Bali No. 305", foto: "" },
+            { nama: "Mahani", liqo: "AL-ALAQ 9.PT3", mudarrisah: "SALMIATI", alamat: "Jl. Ketapang", foto: "" },
+            { nama: "Rahmawati", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Sri wahyuni ST. Parigade", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Salsabila Fauzia Azqa", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Dewi Adelia Iqra Nhazira", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Khaira Putri", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Fathimah Az Zahra", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Minarni", liqo: "AL-ALAQ 9.PT4", mudarrisah: "GALUH INDAH NINGTYAS", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Dra.Sri Suharlina", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "jln Palunagaya III no 612/613 LIK Tondo", foto: "" },
+            { nama: "Rahma Haenur", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:B5 no:10", foto: "" },
+            { nama: "Denri", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:D4 no:13", foto: "" },
+            { nama: "Wiwin Wiarsih S.Pd.", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:D1 no:18", foto: "" },
+            { nama: "Tjasminah", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "LIK Roviga no:1 Pondok Karya Tondo", foto: "" },
+            { nama: "Asmawati A.K. Achmad", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:B3 no:9", foto: "" },
+            { nama: "Sumiati", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:B3 no:14", foto: "" },
+            { nama: "Erlina Massie", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:C7 no:1", foto: "" },
+            { nama: "Dr.Nurwahyuni,S.S.,M.Si", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:C1 no:13", foto: "" },
+            { nama: "Rumianti Andi Thamrin", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:D2 no:13", foto: "" },
+            { nama: "Hj Nurlaeli S.SOS.", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:C1 no:4", foto: "" },
+            { nama: "Harisa Hasan", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo blok:C7 no:6", foto: "" },
+            { nama: "Hj. Ilham", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN Bumi Roviga Tondo", foto: "" },
+            { nama: "Evayanti, SE", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "jln.Puro Tondo", foto: "" },
+            { nama: "BUNGAWALI", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Sihanim", liqo: "AL-ALAQ 9.PT8", mudarrisah: "RATNA ARDILA, S.Tr. Kes", alamat: "BTN rovigaa", foto: "" },
+            { nama: "Lusiana", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jln.yambaere BTN Harvest balaroa", foto: "" },
+            { nama: "Syarifa Khairunnisa", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jln.yambaere BTN harvest balaroa", foto: "" },
+            { nama: "Mildan", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jl.yambaere BTN Harvest Balaroa", foto: "" },
+            { nama: "Nursila", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jl.yambaere BTN Harvest Balaroa", foto: "" },
+            { nama: "Suarti", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jl.Sumur Yuga Balaroa", foto: "" },
+            { nama: "⁠Hj. Dahniar", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jl.Cemangi", foto: "" },
+            { nama: "⁠Kasmawati", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jl.Yambaere BTN Harvest Balaroa", foto: "" },
+            { nama: "⁠Debi Wahyu Angriani, S.Tr.Keb,Bdn", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jjl. Yambaere BTN Harvest Balaroa", foto: "" },
+            { nama: "⁠Dr. Hut. Ice Anugrah Sari, S.Hut., M.P.", liqo: "AL-ALAQ 9.PB2", mudarrisah: "MASDIANA", alamat: "Jln.Yambaere BTN Harvest Balaroa", foto: "" },
+            { nama: "Lisa Utami Musli, S.Kom", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "BTN Taman Ria Estate Kav. Mangga B No. 30", foto: "" },
+            { nama: "Sri Ningsih, A.Md.Kep", liqo: "AL-ALAQ 9.UL4", mudarrisah: "HASNA ZAINUDDIN", alamat: "Jln. Bunga Ijo", foto: "" },
+            { nama: "Arisna, Amd.Kep", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.abdul latif baliase", foto: "" },
+            { nama: "Nurhaida,S.Kep,Ns", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Prumnas tinggede", foto: "" },
+            { nama: "Kurnia, Amd.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Btn puskud", foto: "" },
+            { nama: "Indri Yani S, Amd.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.kangkung", foto: "" },
+            { nama: "Dian Anggriani, Amd.keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.Gawalise", foto: "" },
+            { nama: "Riri Indrawaty, Amd.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl. Padanjakaya", foto: "" },
+            { nama: "Fajriaeni, SKM", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Prumnas tinggede", foto: "" },
+            { nama: "Septiyani, S.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.abdulrahman saleh", foto: "" },
+            { nama: "Apt.Nuryakin,S.Farm", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.kunduri", foto: "" },
+            { nama: "Santi, Amd.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Btn palupi", foto: "" },
+            { nama: "Ade Irma Suriani, Amd.Keb", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl.Asam 2", foto: "" },
+            { nama: "Siti Syarifah, SKM", liqo: "AL-ALAQ 9.UL2", mudarrisah: "FILDAYANTI", alamat: "Jl. Jati", foto: "" },
+            { nama: "SARIYANTI.S", liqo: "AL-ALAQ 9.UL6", mudarrisah: "FILDAYANTI", alamat: "Jl. Munif Rahman", foto: "" },
+            { nama: "ANISA", liqo: "AL-ALAQ 9.UL6", mudarrisah: "FILDAYANTI", alamat: "Jl. Munif Rahman", foto: "" },
+            { nama: "Ummy Hatifah, S.Sos", liqo: "AL-ALAQ 9.UL6", mudarrisah: "FILDAYANTI", alamat: "Jl. Rantogau", foto: "" },
+            { nama: "Rika M. Zakir", liqo: "AL-ALAQ 9.UL6", mudarrisah: "FILDAYANTI", alamat: "Jl. Munif Rahman", foto: "" },
+            { nama: "SILFANA", liqo: "AL-ALAQ 9.UL6", mudarrisah: "FILDAYANTI", alamat: "Jl. Munif Rahman", foto: "" },
+            { nama: "Ratni", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Boya Nempa Nunu", foto: "" },
+            { nama: "Heni Oktavianti", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Jl. Beringin", foto: "" },
+            { nama: "Nursanti", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Boya Nempa Nunu", foto: "" },
+            { nama: "Erma Rahmawati", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Jl. Agatis, Bayoege", foto: "" },
+            { nama: "Ramlah, S.Pd", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Jl. Kramat Jati, Nunu", foto: "" },
+            { nama: "Salma, S.Sos", liqo: "AL-ALAQ 9.TG3", mudarrisah: "SITI NURHASANAH", alamat: "Jl. Kramat Jati, Nunu", foto: "" },
+            { nama: "Mirnawati, S.Sos", liqo: "AL-ALAQ 9.PS3", mudarrisah: "MAGFIRAH", alamat: "BTN Tinggede Blok HH 3 No. 25", foto: "" },
+            { nama: "Erlita Bahir, S.E", liqo: "AL-ALAQ 9.PS3", mudarrisah: "MAGFIRAH", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Henny Indriani, S.T", liqo: "AL-ALAQ 9.PS3", mudarrisah: "MAGFIRAH", alamat: "Jln. garuda lrg batavia blok A no. 3", foto: "" },
+            { nama: "Novieta Sari Latif, S.M", liqo: "AL-ALAQ 9.PS3", mudarrisah: "MAGFIRAH", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "Anita", liqo: "AL-ALAQ 9.PS3", mudarrisah: "MAGFIRAH", alamat: "Jl.Padanjakaya pengawu", foto: "" },
+            { nama: "Imayanti, S.H., M.H", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "Btn Palupi permai Blok C No.7", foto: "" },
+            { nama: "Nurlaela Darlan, S. Ak", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "Jl. Sungai Lewara No. 40", foto: "" },
+            { nama: "Bulgis, S.Ag", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "Perumahan Dosen Untad Blok AI No.13", foto: "" },
+            { nama: "Agustina Petta Nasse, S.H., M.H", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "JL.Dayodara", foto: "" },
+            { nama: "St. Nurcahaya  Ismail, S.Ag., MH", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "Alamat tidak tercatat", foto: "" },
+            { nama: "JOHARNI,S.H.I", liqo: "AL-ALAQ 9.PB3", mudarrisah: "WIDIASTUTI", alamat: "BTN SILAE", foto: "" },
+            { nama: "Rasmi Ramli", liqo: "AL-ALAQ 9. (PERTANAHAN)", mudarrisah: "MASNAH", alamat: "Jl. Datu Pamusu", foto: "" },
+            { nama: "Fatimah Djamaluddin", liqo: "AL-ALAQ 9. (PERTANAHAN)", mudarrisah: "MASNAH", alamat: "Jl. Kunduri", foto: "" },
+            { nama: "Leni Marlina", liqo: "AL-ALAQ 9. (PERTANAHAN)", mudarrisah: "MASNAH", alamat: "Jl. Guru Tua, BTN Ukhuwah Land", foto: "" },
+            { nama: "Tanti Yulia Purnama", liqo: "AL-ALAQ 9. (PERTANAHAN)", mudarrisah: "MASNAH", alamat: "Jl. Sungai Lariang No.12", foto: "" },
+            { nama: "Rini Putriani", liqo: "AL-ALAQ 9. (PERTANAHAN)", mudarrisah: "MASNAH", alamat: "BTN Petobo Blok F", foto: "" }
         ];
-        let currentIndex = -1;
 
-        // Fungsi Memanggil Peserta dengan Efek Transisi Sinematik Halus
-        function nextPeserta() {
+        let currentIndex = 0;
+
+        function updateDisplay() {
             if (daftarPeserta.length === 0) return;
-            
-            currentIndex = (currentIndex + 1) % daftarPeserta.length;
-            const peserta = daftarPeserta[currentIndex];
+            const p = daftarPeserta[currentIndex];
 
             const card = document.getElementById('displayCard');
             const namaEl = document.getElementById('namaPeserta');
+            const labelLiqoEl = document.getElementById('labelLiqo');
             const detailEl = document.getElementById('detailPeserta');
+            const fotoEl = document.getElementById('fotoPeserta');
+            const indexEl = document.getElementById('currentIndex');
+            const totalEl = document.getElementById('totalIndex');
 
-            // Hapus kelas animasi lalu picu ulang (re-trigger reflow) agar transisi sinematik berjalan setiap pergantian nama
+            // Picu ulang transisi sinematik
             card.classList.remove('cinematic-transition');
-            void card.offsetWidth; 
+            void card.offsetWidth;
             card.classList.add('cinematic-transition');
 
-            // Set Data Baru
-            namaEl.textContent = peserta.nama;
-            detailEl.textContent = peserta.detail;
-        }
-
-        // Ambil Data dari Google Apps Script / Google Sheets secara Real-Time
-        async function loadDataFromBackend() {
-            try {
-                const response = await fetch(SCRIPT_URL);
-                const result = await response.json();
-
-                if (result.status === "success" && result.data && result.data.length > 0) {
-                    // Menyesuaikan jika data spreadsheet memiliki kolom Nama dan Detail/Kategori
-                    daftarPeserta = result.data.map(row => ({
-                        nama: row.Field1 || row.Nama || "Tanpa Nama",
-                        detail: row.Field2 || row.Detail || "Peserta Dirosa"
-                    }));
-                    alert("Data berhasil disinkronkan dari Google Sheets!");
-                    currentIndex = -1;
-                    nextPeserta();
-                }
-            } catch (error) {
-                console.log("Menggunakan data lokal cadangan (mode offline/preview).");
+            // Masukkan data peserta
+            namaEl.textContent = p.nama;
+            labelLiqoEl.textContent = `${p.liqo} — Mudarrisah: ${p.mudarrisah}`;
+            detailEl.textContent = `Alamat: ${p.alamat}`;
+            
+            // Atur foto peserta (jika ada di data excel, gunakan; jika kosong tampilkan placeholder elegan)
+            if (p.foto && p.foto.trim() !== "") {
+                fotoEl.src = p.foto; // Ganti dengan path folder foto Anda jika disimpan lokal
+            } else {
+                fotoEl.src = `https://via.placeholder.com/150/111827/D4AF37?text=${encodeURIComponent(p.nama.charAt(0))}`;
             }
+
+            indexEl.textContent = currentIndex + 1;
+            totalEl.textContent = daftarPeserta.length;
         }
+
+        function nextPeserta() {
+            currentIndex = (currentIndex + 1) % daftarPeserta.length;
+            updateDisplay();
+        }
+
+        function prevPeserta() {
+            currentIndex = (currentIndex - 1 + daftarPeserta.length) % daftarPeserta.length;
+            updateDisplay();
+        }
+
+        // Inisialisasi awal saat halaman dimuat
+        window.onload = function() {
+            updateDisplay();
+        };
     </script>
 </body>
 </html>
