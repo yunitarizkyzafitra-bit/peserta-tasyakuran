@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-image: linear-gradient(rgba(10, 10, 10, 0.85), rgba(15, 15, 15, 0.9)), url('[https://raw.githubusercontent.com/yunitarizkyzafitra-bit/peserta-tasyakuran/main/dirosa.jpg](https://raw.githubusercontent.com/yunitarizkyzafitra-bit/peserta-tasyakuran/main/dirosa.jpg)');
+            background-image: linear-gradient(rgba(10, 10, 10, 0.85), rgba(15, 15, 15, 0.9)), url('https://raw.githubusercontent.com/yunitarizkyzafitra-bit/peserta-tasyakuran/main/dirosa.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -94,12 +94,12 @@
 
     <!-- Footer -->
     <footer class="text-center py-2 text-xs text-slate-400 tracking-wider">
-        Tasyakuran Dirosa Angkatan IX &copy; 2026
+        Tasyakuran Dirosa Angkatan IX &copy; 2026[cite: 2]
     </footer>
 
     <!-- Skrip Data Asli Spreadsheet & Transisi Sinematik -->
     <script>
-        // Data utuh 330 peserta dari Spreadsheet Anda
+        // Data utuh 330 peserta dari Spreadsheet Anda[cite: 2]
         const daftarPeserta = [
             { nama: "Riska Rahayu, A.md.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "BTN green tinggede", foto: "Picture1.png" },
             { nama: "Anisya Ismail, A.md.Kep", liqo: "AL-ALAQ 9.PB4", mudarrisah: "EPA NURMALA", alamat: "Puskud", foto: "WhatsApp Image 2026-08-21 at 20.41.45.jpeg" },
@@ -457,12 +457,23 @@
             labelLiqoEl.textContent = `${p.liqo} — Mudarrisah: ${p.mudarrisah}`;
             detailEl.textContent = `Alamat: ${p.alamat}`;
             
-            // Atur foto peserta (jika ada di data excel, gunakan; jika kosong tampilkan placeholder elegan)
+            // Atur foto peserta (jika ada file di data, muat dari folder/repo, jika gagal atau kosong gunakan inisial)
             if (p.foto && p.foto.trim() !== "") {
-                fotoEl.src = p.foto; // Ganti dengan path folder foto Anda jika disimpan lokal
+                // Cek apakah itu link eksternal atau file lokal
+                if (p.foto.startsWith('http://') || p.foto.startsWith('https://')) {
+                    fotoEl.src = p.foto;
+                } else {
+                    // Sesuaikan base URL folder foto Anda jika disimpan di GitHub/Local
+                    fotoEl.src = `https://raw.githubusercontent.com/yunitarizkyzafitra-bit/peserta-tasyakuran/main/${p.foto}`;
+                }
             } else {
                 fotoEl.src = `https://via.placeholder.com/150/111827/D4AF37?text=${encodeURIComponent(p.nama.charAt(0))}`;
             }
+
+            // Fallback jika gambar gagal dimuat
+            fotoEl.onerror = function() {
+                this.src = `https://via.placeholder.com/150/111827/D4AF37?text=${encodeURIComponent(p.nama.charAt(0))}`;
+            };
 
             indexEl.textContent = currentIndex + 1;
             totalEl.textContent = daftarPeserta.length;
@@ -477,6 +488,15 @@
             currentIndex = (currentIndex - 1 + daftarPeserta.length) % daftarPeserta.length;
             updateDisplay();
         }
+
+        // Navigasi Keyboard (Panah Kanan/Kiri untuk mempermudah operator di acara)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextPeserta();
+            } else if (event.key === 'ArrowLeft') {
+                prevPeserta();
+            }
+        });
 
         // Inisialisasi awal saat halaman dimuat
         window.onload = function() {
