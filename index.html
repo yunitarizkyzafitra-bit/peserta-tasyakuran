@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemanggilan Peserta - Tasyakuran Dirosa Angkatan IX</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Desain Latar Belakang & Efek Transisi Sinematik */
+        body {
+            background-image: linear-gradient(rgba(10, 10, 10, 0.85), rgba(15, 15, 15, 0.9)), url('MASUKKAN_URL_GAMBAR_BACKGROUND_ANDA_DISINI');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Animasi Transisi Halus / Cinematic Keyframes */
+        @keyframes cinematicIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+                filter: blur(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .cinematic-transition {
+            animation: cinematicIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Efek Glow Teks Emas */
+        .gold-glow {
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.4), 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body class="text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between p-6">
+
+    <!-- Header / Identitas Acara -->
+    <header class="max-w-4xl mx-auto w-full text-center py-6">
+        <div class="inline-block px-6 py-2 rounded-full bg-slate-900/80 border border-amber-500/30 text-amber-400 text-xs font-semibold tracking-widest uppercase mb-3 shadow-lg">
+            Angkatan IX
+        </div>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-amber-300 tracking-wide gold-glow">
+            PROSESI TASYAKURAN DIROSA
+        </h1>
+        <p class="text-sm text-slate-300 mt-2 font-medium tracking-wider">Sistem Pemanggilan Peserta Berbasis Cloud & Integrasi Real-Time</p>
+    </header>
+
+    <!-- Konten Utama / Panggung Pemanggilan Sinematik -->
+    <main class="max-w-3xl mx-auto w-full my-auto">
+        <div id="displayCard" class="bg-slate-950/80 backdrop-blur-xl border border-amber-500/40 rounded-3xl p-10 shadow-2xl text-center cinematic-transition relative overflow-hidden">
+            
+            <!-- Aksen Cahaya Sudut -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <span id="labelStatus" class="text-xs uppercase tracking-widest text-amber-400/80 font-bold block mb-3">Peserta Dipanggil Saat Ini</span>
+            
+            <!-- Nama Peserta (Fokus Utama Transisi) -->
+            <h2 id="namaPeserta" class="text-4xl md:text-6xl font-black text-white my-4 tracking-tight gold-glow transition-all duration-700">
+                Silakan Pilih Peserta
+            </h2>
+            
+            <!-- Detail / Kelompok Peserta -->
+            <div id="detailPeserta" class="text-lg md:text-xl text-amber-200/90 font-medium mb-8">
+                -
+            </div>
+
+            <!-- Panel Kontrol Operator / Navigasi -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 pt-6 border-t border-slate-800">
+                <button onclick="nextPeserta()" class="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-amber-600/30 transition transform active:scale-95">
+                    Panggil Peserta Berikutnya ➔
+                </button>
+                <button onclick="loadDataFromBackend()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium px-6 py-3.5 rounded-xl transition">
+                    Sinkronisasi Data Sheet
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-400 tracking-wider">
+        Tasyakuran Dirosa Angkatan IX &copy; 2026 &bull; Secure System Architecture
+    </footer>
+
+    <!-- Skrip Logika & Transisi Sinematik -->
+    <script>
+        // Ganti dengan URL Web App Google Apps Script Anda
+        const SCRIPT_URL = "URL_WEB_APP_ANDA_DISINI";
+
+        let daftarPeserta = [
+            { nama: "Ahmad Fauzi, S.Pd.", detail: "Kelompok 01 - Palu Selatan" },
+            { nama: "Siti Aminah", detail: "Kelompok 02 - Palu Timur" },
+            { nama: "Muh. Rasyid", detail: "Kelompok 03 - Tatanga" }
+        ];
+        let currentIndex = -1;
+
+        // Fungsi Memanggil Peserta dengan Efek Transisi Sinematik Halus
+        function nextPeserta() {
+            if (daftarPeserta.length === 0) return;
+            
+            currentIndex = (currentIndex + 1) % daftarPeserta.length;
+            const peserta = daftarPeserta[currentIndex];
+
+            const card = document.getElementById('displayCard');
+            const namaEl = document.getElementById('namaPeserta');
+            const detailEl = document.getElementById('detailPeserta');
+
+            // Hapus kelas animasi lalu picu ulang (re-trigger reflow) agar transisi sinematik berjalan setiap pergantian nama
+            card.classList.remove('cinematic-transition');
+            void card.offsetWidth; 
+            card.classList.add('cinematic-transition');
+
+            // Set Data Baru
+            namaEl.textContent = peserta.nama;
+            detailEl.textContent = peserta.detail;
+        }
+
+        // Ambil Data dari Google Apps Script / Google Sheets secara Real-Time
+        async function loadDataFromBackend() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const result = await response.json();
+
+                if (result.status === "success" && result.data && result.data.length > 0) {
+                    // Menyesuaikan jika data spreadsheet memiliki kolom Nama dan Detail/Kategori
+                    daftarPeserta = result.data.map(row => ({
+                        nama: row.Field1 || row.Nama || "Tanpa Nama",
+                        detail: row.Field2 || row.Detail || "Peserta Dirosa"
+                    }));
+                    alert("Data berhasil disinkronkan dari Google Sheets!");
+                    currentIndex = -1;
+                    nextPeserta();
+                }
+            } catch (error) {
+                console.log("Menggunakan data lokal cadangan (mode offline/preview).");
+            }
+        }
+    </script>
+</body>
+</html>
